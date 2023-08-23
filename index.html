@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guess the Number</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="language-buttons">
+    <button id="languageBtn">English</button>
+  </div>
+  <h1 id="pageTitle">Guess the Number</h1>
+  <p id="pageContent">Try to guess the number between 1 and 100.</p>
+  <input type="number" id="guessInput" placeholder="Enter your guess">
+  <button id="guessButton">Guess</button>
+  <p id="message"></p>
+
+  <script>
+    // script.js
+const targetNumber = Math.floor(Math.random() * 100) + 1;
+let attempts = 0;
+let currentLanguage = 'english'; // Default language is English
+
+const guessInput = document.getElementById('guessInput');
+const guessButton = document.getElementById('guessButton');
+const message = document.getElementById('message');
+const languageBtn = document.getElementById('languageBtn');
+const pageTitle = document.getElementById('pageTitle');
+const pageContent = document.getElementById('pageContent');
+
+languageBtn.addEventListener('click', () => {
+  if (currentLanguage === 'english') {
+    currentLanguage = 'russian';
+    languageBtn.textContent = 'English';
+    pageTitle.textContent = 'Угадай число';
+    pageContent.textContent = 'Попробуйте угадать число от 1 до 100.';
+  } else {
+    currentLanguage = 'english';
+    languageBtn.textContent = 'Русский';
+    pageTitle.textContent = 'Guess the Number';
+    pageContent.textContent = 'Try to guess the number between 1 and 100.';
+  }
+});
+
+guessButton.addEventListener('click', () => {
+  const userGuess = parseInt(guessInput.value);
+  attempts++;
+
+  if (userGuess === targetNumber) {
+    message.textContent = (currentLanguage === 'english')
+      ? `Congratulations! You guessed the number ${targetNumber} in ${attempts} attempts.`
+      : `Поздравляем! Вы угадали число ${targetNumber} за ${attempts} попыток.`;
+    guessButton.disabled = true;
+  } else if (userGuess < targetNumber) {
+    message.textContent = (currentLanguage === 'english')
+      ? 'Try a higher number.'
+      : 'Попробуйте больше число.';
+  } else {
+    message.textContent = (currentLanguage === 'english')
+      ? 'Try a lower number.'
+      : 'Попробуйте меньше число.';
+  }
+
+  guessInput.value = '';
+});
+
+  </script>
+</body>
+</html>
